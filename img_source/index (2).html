@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            position: relative;
+        }
+
+        .trail {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 0, 0, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.1s ease-out, background-color 0.3s ease, width 0.3s ease, height 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0;
+            mix-blend-mode: difference;
+        }
+
+        .follower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 0, 0, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 2s ease-out;
+        }
+
+        img,
+        video {
+            max-width: 100%;
+            height: auto;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        main {
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #444;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+    <title>Cursor Trail Animation</title>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to My Interactive Page</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Introduction</h2>
+            <p>This page demonstrates a smooth cursor trail animation effect combined with a simple yet elegant webpage
+                layout. Explore the content as the cursor follows your movements with a subtle red glow.</p>
+            <img src="https://srv.carbonads.net/static/30242/4b723271609d12c16fec10ddea2ce78e9bba0517" alt="Sample Image">
+        </section>
+        <section>
+            <h2>Content Section 1</h2>
+            <p>Here is some sample content for the first section. You can replace this text with any information you
+                wish to convey.</p>
+            <video controls width="400">
+                <source src="sample-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Interactive Page</p>
+    </footer>
+    <script>
+        const trail = document.createElement('div');
+        trail.classList.add('trail');
+        trail.textContent = 'View';
+        document.body.appendChild(trail);
+
+        const followers = Array.from({ length: 5 }, () => {
+            const follower = document.createElement('div');
+            follower.classList.add('follower');
+            document.body.appendChild(follower);
+            return follower;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            trail.style.left = `${e.clientX - trail.offsetWidth / 2}px`;
+            trail.style.top = `${e.clientY - trail.offsetHeight / 2}px`;
+
+            followers.forEach((follower, index) => {
+                setTimeout(() => {
+                    follower.style.left = `${e.clientX - 10}px`;
+                    follower.style.top = `${e.clientY - 10}px`;
+                }, index * 50); // Delay each follower slightly
+            });
+        });
+
+        document.querySelectorAll('img, video').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                trail.style.width = '120px';
+                trail.style.height = '120px';
+                trail.style.backgroundColor = 'rgba(0, 0, 255, 0.6)';
+                trail.style.opacity = 1;
+            });
+
+            element.addEventListener('mouseleave', () => {
+                trail.style.width = '80px';
+                trail.style.height = '80px';
+                trail.style.backgroundColor = 'rgba(255, 0, 0, 0.6)';
+                trail.style.opacity = 0;
+            });
+        });
+    </script>
+</body>
+
+</html>
